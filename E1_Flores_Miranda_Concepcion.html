@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Graph{
+            constructor(numvertice)
+            {
+                this.numvertice = numvertice; //numero de vertices
+                this.addLista = new Map(); //creamos un mapa para almacenar las listas de adyacencia
+            }
+            
+            addVertice(v)
+            {
+                this.addLista.set(v,[]); //agrega un vertice
+            }
+            
+            addNode(v, w)
+            {
+                this.addLista.get(v).push(w); //agrega un nodo a la lista de adyacencia
+                this.addLista.get(w).push(v); // agrega un nodo a la lista de adyacencia
+            }
+            
+            
+            printGrafo()
+            {
+                let keys = this.addLista.keys(); // obtener las llaves del grafo
+                for(let v of keys) //rrecorre el arreglo
+                {
+                let eList = this.addLista.get(v); // obtener los valores de las llaves
+                let data = ''; // variable para almacenar los valores
+                for(let e in eList) //reecorre el arreglo 
+                {
+                    data = data + eList[e] + ' '; // almacena los valores en la variable data
+                }
+                console.log(v + '->' + data); // imprime los valores
+                }
+            }
+            
+            bfs(v)
+            { // recorrido por amplitud
+                let q = []; //genera un arreglo q
+                q.push(v); // inserta el vertice en el arreglo q
+                let visited = []; //genera un arreglo de visitados
+                let keys = this.addLista.keys(); // genera un arreglo con las llaves del grafo
+                for(let v of keys)// recorre el arreglo de llaves
+                {
+                    visited[v] = false; // inserta en el arreglo de visitados el valor false
+                }
+                {
+                visited[v] = false;     // inserta en el arreglo de visitados el valor false
+                }
+                
+                while(q.length > 0) // si el arreglo tiene elementos
+                {
+                let element = q.shift(); /// saca el primer elemento del arreglo q
+                visited[element] = true; // inserta en el arreglo de visitados el valor true
+                console.log(element); // imprime el elemento
+                let eList = this.addLista.get(element); // genera un arreglo con los elementos del grafo
+                for(let eData in eList) //recorre el arreglo 
+                {
+                    let e = eList[eData]; // genera una variable con el elemento del arreglo
+                    if(! visited[e]) // si el elemento no ha sido visitado
+                    {
+                    {
+                    q.push(e);  //mete el elemento en q
+                    visited[e] = true; // inserta en el arreglo de visitados el valor true
+                    }
+                    }
+                }
+                }
+                
+            }
+            
+            dfs(v)
+            { // recorrido de profundidad
+                
+                let visited = []; //genera un arreglo de visitados
+                let keys = this.addLista.keys(); // genera un arreglo con las llaves del grafo
+                for(let v of keys) // rrecorre el arreglo de llaves
+                {
+                visited[v] = false; // inserta en el arreglo de visitados el valor false
+                }
+                
+                this.dfsRecu(v, visited); // llama a la funcion dfsRecu
+            }
+            
+            dfsRecu(v, visited)
+            {
+                let eList = this.addLista.get(v); // genera un arreglo con los elementos del grafo
+                visited[v] = true; // inserta en el arreglo de visitados el valor true
+                console.log(v); // imprime el elemento
+                for(let eData in eList) 
+                {
+                let e = eList[eData]; // genera una variable con el elemento del arreglo
+                if(!visited[e]) 
+                {
+                    visited[e] = true; // inserta en el arreglo de visitados el valor true
+                    this.dfsRecu(e, visited); // llama a la funcion dfsRecu
+                }
+                }
+            }
+            
+            
+        }
+
+
+            var g = new Graph(4);
+
+            g.addVertice('A'); //agrega un vertice
+            g.addVertice('B'); //agrega un vertice
+            g.addVertice('C'); //agrega un vertice
+            g.addVertice('D'); //agrega un vertice
+
+            g.addNode('A', 'B'); //agrega un nodo a la lista de adyacencia
+            g.addNode('B','C'); //agrega un nodo a la lista de adyacencia
+            g.addNode('C','D'); //agrega un nodo a la lista de adyacencia
+            g.addNode('D','A'); //agrega un nodo a la lista de adyacencia
+
+            g.printGrafo(); // imprime el grafo
+
+            console.log('\n');
+            console.log('Primer recorrido por amplitud');
+            g.bfs('A');
+
+            console.log('Primer recorrido de profundidad');
+            g.dfs('B');
+
+            console.log('Primer recorrido de topológico ');
+            g.dfs('C');
+
+    </script>
+</body>
+</html>
